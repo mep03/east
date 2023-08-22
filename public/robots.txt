@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /dashboard
+
+Sitemap: https://east.baby/sitemap.xml
