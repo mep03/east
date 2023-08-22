@@ -51,18 +51,14 @@ export const isSession = async (
   const userSessionToken = req.cookies.sessionToken;
 
   if (userSessionToken) {
-    try {
-      const user = await UserModel.findOne({
-        sessionToken: userSessionToken,
-      });
+    const user = await UserModel.findOne({
+      sessionToken: userSessionToken,
+    });
 
-      if (user) {
-        res.status(403).redirect("/dashboard");
-      } else {
-        next();
-      }
-    } catch (error) {
-      res.status(500).json({ error: "Internal server error" });
+    if (user) {
+      res.status(403).redirect("/dashboard");
+    } else {
+      next();
     }
   } else {
     next();

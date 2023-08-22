@@ -37,7 +37,7 @@ const router = express.Router();
  * @middleware isSession - Middleware function for checking an active session.
  * @controller serveIndexPage - Controller function for serving the index page.
  */
-router.get("/", cache("2 day"), isSession, serveIndexPage);
+router.get("/", isSession, cache("2 day"), serveIndexPage);
 
 /**
  * Route for getting all short URLs.
@@ -162,7 +162,7 @@ router.get("/auth/logout", logOut);
  * @middleware isSession - Middleware function for checking an active session.
  * @controller showSignIn - Controller function for rendering the sign-in page.
  */
-router.get("/signin", cache("2 day"), isSession, showSignIn);
+router.get("/signin", isSession, cache("2 day"), showSignIn);
 
 /**
  * Route for displaying the sign-up page.
@@ -174,7 +174,7 @@ router.get("/signin", cache("2 day"), isSession, showSignIn);
  * @middleware isSession - Middleware function for checking an active session.
  * @controller showSignUp - Controller function for rendering the sign-up page.
  */
-router.get("/signup", cache("2 day"), isSession, showSignUp);
+router.get("/signup", isSession, cache("2 day"), showSignUp);
 
 /**
  * Route for displaying the dashboard page.
