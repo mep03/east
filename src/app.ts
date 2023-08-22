@@ -20,7 +20,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join("public")));
+app.use(express.static(path.join("public"), { maxAge: 172800000 }));
 
 app.use("/", router);
 

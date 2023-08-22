@@ -11,13 +11,23 @@ import { UserModel } from "../models/schema";
  * @param res - The Express response object used to send the response.
  * @param next - The next middleware function in the pipeline.
  */
-export const requireAuth = (
+export const requireAuth = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  if (req.cookies.sessionToken) {
-    next();
+  const userSessionToken = req.cookies.sessionToken;
+
+  if (userSessionToken) {
+    const user = await UserModel.findOne({
+      sessionToken: userSessionToken,
+    });
+
+    if (user) {
+      next();
+    } else {
+      res.status(403).redirect("/signin");
+    }
   } else {
     res.status(403).redirect("/signin");
   }

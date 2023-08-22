@@ -1,7 +1,8 @@
 import express from "express";
 
 import { Middleware } from "../middleware";
-import { requireAuth, isSession } from "../lib/auth";
+import { requireAuth, isSession } from "../libs/auth";
+import { cache } from "../libs/cache";
 
 import {
   serveIndexPage,
@@ -36,7 +37,7 @@ const router = express.Router();
  * @middleware isSession - Middleware function for checking an active session.
  * @controller serveIndexPage - Controller function for serving the index page.
  */
-router.get("/", isSession, serveIndexPage);
+router.get("/", cache("2 day"), isSession, serveIndexPage);
 
 /**
  * Route for getting all short URLs.
@@ -161,7 +162,7 @@ router.get("/auth/logout", logOut);
  * @middleware isSession - Middleware function for checking an active session.
  * @controller showSignIn - Controller function for rendering the sign-in page.
  */
-router.get("/signin", isSession, showSignIn);
+router.get("/signin", cache("2 day"), isSession, showSignIn);
 
 /**
  * Route for displaying the sign-up page.
@@ -173,7 +174,7 @@ router.get("/signin", isSession, showSignIn);
  * @middleware isSession - Middleware function for checking an active session.
  * @controller showSignUp - Controller function for rendering the sign-up page.
  */
-router.get("/signup", isSession, showSignUp);
+router.get("/signup", cache("2 day"), isSession, showSignUp);
 
 /**
  * Route for displaying the dashboard page.
@@ -233,7 +234,7 @@ router.get("/dashboard/delete/:id", requireAuth, showDelete);
  * @route /privacy
  * @controller showPrivacy - Controller function responsible for rendering the privacy policy page.
  */
-router.get("/privacy", showPrivacy);
+router.get("/privacy", cache("2 day"), showPrivacy);
 
 /**
  * Route for displaying the "about" page.
@@ -243,6 +244,6 @@ router.get("/privacy", showPrivacy);
  * @route /about
  * @controller showAbout - Controller function responsible for rendering the "about" page.
  */
-router.get("/about", showAbout);
+router.get("/about", cache("2 day"), showAbout);
 
 export default router;
