@@ -1,0 +1,21 @@
+{
+  "name": "East",
+  "short_name": "East",
+  "description": "An app to shorten URLs",
+  "icons": [
+    {
+      "src": "/img/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "theme_color": "#1a202c",
+  "background_color": "#1a202c",
+  "display": "standalone"
+}

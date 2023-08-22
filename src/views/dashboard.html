@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en" prefix="og: https://ogp.me/ns#">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Create custom short URLs with our URL Shortener tool. Easily manage and share your links. Get started now!"
+    />
+    <meta property="og:title" content="URL Shortener | Dashboard" />
+    <meta
+      property="og:description"
+      content="Create custom short URLs with our URL Shortener tool. Easily manage and share your links. Get started now!"
+    />
+    <meta property="og:image" content="https://east.baby/img/opengraph.png" />
+    <meta property="og:url" content="https://east.baby/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="URL Shortener | Dashboard" />
+    <meta
+      name="twitter:description"
+      content="Create custom short URLs with our URL Shortener tool. Easily manage and share your links. Get started now!"
+    />
+    <meta name="twitter:image" content="https://east.baby/img/opengraph.png" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/img/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/img/favicon-16x16.png"
+    />
+    <link rel="canonical" href="https://east.baby/dashboard/" />
+    <link rel="manifest" href="/manifest.json" />
+    <link href="/styles.css" rel="stylesheet" />
+    <title>East | Dashboard</title>
+  </head>
+
+  <body>
+    <!-- navigation -->
+    <div class="navbar bg-neutral text-neutral-content">
+      <div class="navbar-start">
+        <div class="dropdown">
+          <label tabindex="0" class="btn btn-ghost btn-circle">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h7"
+              />
+            </svg>
+          </label>
+          <ul
+            tabindex="0"
+            class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 rounded-box w-52"
+          >
+            <li><a href="/github">Github</a></li>
+            <li>
+              <a class="justify-between" href="/docs">
+                Docs
+                <span class="badge">Soon</span>
+              </a>
+            </li>
+            <li><a href="/privacy">Privacy</a></li>
+            <li><a href="/about">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="flex-1">
+        <a class="btn btn-ghost normal-case text-xl">East.</a>
+      </div>
+      <div class="navbar-end">
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+            <div class="w-10 rounded-full">
+              <img src="/img/4bc17e4ae7a192b504d0128bafd315f7.png" />
+            </div>
+          </label>
+          <ul
+            tabindex="0"
+            class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-200 rounded-box w-52"
+          >
+            <li>
+              <a class="justify-between">
+                Profile
+                <span class="badge">Soon</span>
+              </a>
+            </li>
+            <li>
+              <a class="justify-between">
+                Settings
+                <span class="badge">Soon</span>
+              </a>
+            </li>
+            <li><button onclick="logout.showModal()">Logout</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- create -->
+    <div class="container mx-auto pt-4">
+      <div class="flex mx-2 md:mx-0 justify-between">
+        <a href="/dashboard/create" class="btn btn-sm btn-outline">Create</a>
+      </div>
+    </div>
+
+    <div class="container mx-auto py-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- content 1 -->
+        <div class="rounded-lg shadow-md mx-2 md:mx-0">
+          <div class="overflow-x-auto">
+            <table id="copy" class="table w-full bg-neutral border-separate">
+              <!-- head -->
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Short</th>
+                  <th>To</th>
+                  <th>Copy</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- row -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- content 2 -->
+        <div class="rounded-lg shadow-md mx-2 md:mx-0">
+          <div class="overflow-x-auto">
+            <table id="update" class="table w-full bg-neutral border-separate">
+              <!-- head -->
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Short</th>
+                  <th>To</th>
+                  <th>Update</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- row -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- content 3 -->
+      <div class="rounded-lg shadow-md mt-4 mx-2 md:mx-0">
+        <div class="overflow-x-auto">
+          <table id="analytics" class="table w-full bg-neutral border-separate">
+            <!-- head -->
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Short</th>
+                <th>To</th>
+                <th>Analytics</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- row -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- logout -->
+    <dialog id="logout" class="modal">
+      <form method="dialog" class="modal-box">
+        <h3 class="font-bold text-lg">Confirm Logout</h3>
+        <p class="py-4">Are you sure you want to log out?</p>
+        <div class="modal-action">
+          <a href="/auth/logout" class="btn btn-sm btn-warning">Yes</a>
+          <button class="btn btn-sm btn-primary">No</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script
+      src="/js/dashboard.js"
+      sct="sct-NW4MaLzLxYkiXfZ0wEi3Y0U6DKbzpM4bMpABp68RtabV4ArN0JxIFb00OBkK"
+    ></script>
+    <script src="/js/service.js"></script>
+  </body>
+</html>
