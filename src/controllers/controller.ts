@@ -10,8 +10,10 @@ import {
   UserModel,
   UserDocument,
 } from "../models/schema";
-import { generateSessionToken } from "../utils/token";
+import { generateToken } from "../utils/token";
+import { sendEmail } from "../libs/mail";
 import { shouldSkipRedirect } from "../utils/skipredirect";
+import { isStrongPassword } from "../utils/password";
 
 /**
  * @desc Serves the index page.
@@ -369,7 +371,11 @@ export const signIn = async (req: Request, res: Response) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    const sessionToken = generateSessionToken();
+    if (!user.emailVerified) {
+      return res.status(401).json({ error: "Email not verified" });
+    }
+
+    const sessionToken = generateToken();
 
     user.sessionToken = sessionToken;
     await user.save();
@@ -387,7 +393,8 @@ export const signIn = async (req: Request, res: Response) => {
 /**
  * @desc Handles user registration.
  * @info This function handles the user registration process. It takes user email and password from the request body,
- *       checks if the user already exists, then creates a new user with a hashed password.
+ *       checks if the user already exists, hashes the password, generates a verification token,
+ *       creates a new user entry in the database, and sends a verification email to the user.
  * @param req The Express Request object.
  * @param res The Express Response object.
  */
@@ -400,11 +407,65 @@ export const signUp = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "User email already exists" });
     }
 
+    if (!isStrongPassword(password)) {
+      return res.status(400).json({ error: "Password is not strong enough" });
+    }
+
     const hashedPassword = bcrypt.hashSync(password, 10);
-    await UserModel.create({ email, password: hashedPassword });
+    const sessionToken = generateToken();
+    const verificationToken = generateToken();
+
+    await UserModel.create({
+      email,
+      password: hashedPassword,
+      sessionToken,
+      verificationToken,
+    });
+
+    const baseUrl = process.env.PUBLIC_URI as string;
+
+    const senderName = "East Accounts";
+    const subject = "Verify Email Address";
+    const content = `<p>Thanks You for SignUp 👻<br><br>Please click the following link to verification your email: <a href="${baseUrl}/verification/${verificationToken}">Verify Email</a><br><br>Note: If you didn't sign up for our service, you can safely ignore this email.</p>`;
+
+    sendEmail(senderName, email, subject, content);
+
     return res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
+    console.error("Error registering user:", error);
     return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+/**
+ * @desc Handles email verification.
+ * @info This function handles the email verification process. It takes a verification token from the request parameters,
+ *       searches for a user with the corresponding verification token, updates the user's emailVerified status to true,
+ *       and sends a success response indicating that the email has been verified.
+ * @param req The Express Request object.
+ * @param res The Express Response object.
+ */
+export const verificationToken = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.params;
+
+    const user = await UserModel.findOne({ verificationToken: token });
+
+    if (!user) {
+      return res
+        .status(404)
+        .sendFile(path.join(__dirname, "../views/verification-invalid.html"));
+    }
+
+    user.emailVerified = true;
+    await user.save();
+
+    res
+      .status(200)
+      .sendFile(path.join(__dirname, "../views/verification.html"));
+  } catch (error) {
+    console.error("Error verifying email:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -415,7 +476,7 @@ export const signUp = async (req: Request, res: Response) => {
  * @param req The Express Request object.
  * @param res The Express Response object.
  */
-export const logOut = (req: Request, res: Response) => {
+export const signOut = (req: Request, res: Response) => {
   res.clearCookie("sessionToken", { httpOnly: true, secure: true });
 
   return res.status(200).redirect("/");

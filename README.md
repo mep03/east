@@ -17,9 +17,13 @@ Start Command = node dist/app.js
 ### Environment Variables
 
 ```
-API_KEY = sct-NW4MaLzLxYkiXfZ0wEi3Y0U6DKbzpM4bMpABp68RtabV4ArN0JxIFb00OBkK    # note: this default API_KEY
-MONGODB_URI = your_mongodb
-PUBLIC_URI = your_domain    # ex: https://east.baby
+PORT=
+MONGODB_URI=
+PUBLIC_URI=
+API_KEY=
+MAIL_FROM=
+MAIL_USER=
+MAIL_PASSWORD=
 ```
 
 ## Nginx

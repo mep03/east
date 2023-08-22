@@ -25,12 +25,14 @@ const urlSchema = new Schema<UrlDocument>({
 /**
  * @info Represents a user document stored in the database.
  * @desc This interface defines the structure of a user document, including their email,
- *       password, and session token.
+ *       password, session token, email verified and verification token.
  */
 export interface UserDocument extends Document {
   email: string;
   password: string;
   sessionToken: string;
+  emailVerified: boolean;
+  verificationToken: string;
 }
 
 /**
@@ -40,6 +42,8 @@ const userSchema = new Schema<UserDocument>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   sessionToken: { type: String, unique: true },
+  emailVerified: { type: Boolean, default: false },
+  verificationToken: { type: String, unique: true },
 });
 
 /**

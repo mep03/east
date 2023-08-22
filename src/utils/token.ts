@@ -1,10 +1,10 @@
 /**
- * Generates a session token.
- * @info This function generates a random session token consisting of alphanumeric characters.
- * @desc Handles the logic for generating a session token.
- * @returns {string} A randomly generated session token.
+ * Generates a token.
+ * @info This function generates a random token consisting of alphanumeric characters.
+ * @desc Handles the logic for generating a token.
+ * @returns {string} A randomly generated token.
  */
-export function generateSessionToken(): string {
+export function generateToken(): string {
   const tokenLength = 32;
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

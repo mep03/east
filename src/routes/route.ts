@@ -14,7 +14,8 @@ import {
   redirectToOriginalUrl,
   signIn,
   signUp,
-  logOut,
+  verificationToken,
+  signOut,
   showSignIn,
   showSignUp,
   showDashboard,
@@ -142,15 +143,26 @@ router.post("/auth/signin", Middleware, signIn);
 router.post("/auth/signup", Middleware, signUp);
 
 /**
- * Route for user logout.
- * @info This route calls the 'logOut' controller function to handle user logout,
- *       effectively clearing the session token cookie.
- * @desc Handles the logic for user logout route.
+ * Route for user email verification.
+ * @desc This route handles the email verification process. When accessed with a verification token as a parameter,
+ *       it triggers the 'verificationToken' controller function, which verifies the user's email and updates their emailVerified status.
  * @method GET
- * @route /auth/logout
- * @controller logOut - Controller function for handling user logout.
+ * @route /verification/:token
+ * @middleware isSession - Middleware that checks if the user is authenticated and has an active session.
+ * @controller verificationToken - Controller function for handling email verification.
  */
-router.get("/auth/logout", logOut);
+router.get("/verification/:token", isSession, verificationToken);
+
+/**
+ * Route for user sign-out.
+ * @info This route calls the 'signOut' controller function to handle user sign-out,
+ *       effectively clearing the session token cookie.
+ * @desc Handles the logic for user sign-out route.
+ * @method GET
+ * @route /auth/signout
+ * @controller signOut - Controller function for handling user signout.
+ */
+router.get("/auth/signout", signOut);
 
 /**
  * Route for displaying the sign-in page.

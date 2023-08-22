@@ -45,9 +45,7 @@
     <link href="/styles.css" rel="stylesheet" />
     <title>East | Dashboard</title>
   </head>
-
   <body>
-    <!-- navigation -->
     <div class="navbar bg-neutral text-neutral-content">
       <div class="navbar-start">
         <div class="dropdown">
@@ -114,21 +112,16 @@
         </div>
       </div>
     </div>
-
-    <!-- create -->
     <div class="container mx-auto pt-4">
       <div class="flex mx-2 md:mx-0 justify-between">
         <a href="/dashboard/create" class="btn btn-sm btn-outline">Create</a>
       </div>
     </div>
-
     <div class="container mx-auto py-4">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- content 1 -->
         <div class="rounded-lg shadow-md mx-2 md:mx-0">
           <div class="overflow-x-auto">
             <table id="copy" class="table w-full bg-neutral border-separate">
-              <!-- head -->
               <thead>
                 <tr>
                   <th>No</th>
@@ -137,18 +130,13 @@
                   <th>Copy</th>
                 </tr>
               </thead>
-              <tbody>
-                <!-- row -->
-              </tbody>
+              <tbody></tbody>
             </table>
           </div>
         </div>
-
-        <!-- content 2 -->
         <div class="rounded-lg shadow-md mx-2 md:mx-0">
           <div class="overflow-x-auto">
             <table id="update" class="table w-full bg-neutral border-separate">
-              <!-- head -->
               <thead>
                 <tr>
                   <th>No</th>
@@ -157,19 +145,14 @@
                   <th>Update</th>
                 </tr>
               </thead>
-              <tbody>
-                <!-- row -->
-              </tbody>
+              <tbody></tbody>
             </table>
           </div>
         </div>
       </div>
-
-      <!-- content 3 -->
       <div class="rounded-lg shadow-md mt-4 mx-2 md:mx-0">
         <div class="overflow-x-auto">
           <table id="analytics" class="table w-full bg-neutral border-separate">
-            <!-- head -->
             <thead>
               <tr>
                 <th>No</th>
@@ -179,26 +162,21 @@
                 <th>Delete</th>
               </tr>
             </thead>
-            <tbody>
-              <!-- row -->
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
       </div>
     </div>
-
-    <!-- logout -->
     <dialog id="logout" class="modal">
       <form method="dialog" class="modal-box">
         <h3 class="font-bold text-lg">Confirm Logout</h3>
         <p class="py-4">Are you sure you want to log out?</p>
         <div class="modal-action">
-          <a href="/auth/logout" class="btn btn-sm btn-warning">Yes</a>
+          <a href="/auth/signout" class="btn btn-sm btn-warning">Yes</a>
           <button class="btn btn-sm btn-primary">No</button>
         </div>
       </form>
     </dialog>
-
     <script
       src="/js/dashboard.js"
       sct="sct-NW4MaLzLxYkiXfZ0wEi3Y0U6DKbzpM4bMpABp68RtabV4ArN0JxIFb00OBkK"
