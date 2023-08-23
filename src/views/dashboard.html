@@ -44,23 +44,14 @@
     <link rel="manifest" href="/manifest.json" />
     <link href="/styles.css" rel="stylesheet" />
     <title>East | Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/gh/manucaralmo/GlowCookies@3.1.8/src/glowCookies.min.js"></script>
-    <script>
-      glowCookies.start("en", {
-        style: 1,
-        analytics: "G-24044F2GSK",
-        policyLink: "https://east.baby/privacy",
-        hideAfterClick: true,
-        border: "none",
-        bannerBackground: "#2a323c",
-        bannerColor: "#ffffff",
-        acceptBtnBackground: "#7400b8",
-        bannerHeading: `<p class="text-2xl -mt-4 font-semibold">Cookies</p>`,
-      });
-    </script>
+    <script
+      src="/js/dashboard.js"
+      sct="sct-NW4MaLzLxYkiXfZ0wEi3Y0U6DKbzpM4bMpABp68RtabV4ArN0JxIFb00OBkK"
+      defer
+    ></script>
   </head>
   <body>
-    <div class="navbar bg-neutral text-neutral-content">
+    <nav class="navbar bg-neutral text-neutral-content">
       <div class="navbar-start">
         <div class="dropdown">
           <label tabindex="0" class="btn btn-ghost btn-circle">
@@ -87,7 +78,7 @@
             <li>
               <a class="justify-between" href="/docs">
                 Docs
-                <span class="badge">Soon</span>
+                <span class="badge">New</span>
               </a>
             </li>
             <li><a href="/privacy">Privacy</a></li>
@@ -125,13 +116,13 @@
           </ul>
         </div>
       </div>
-    </div>
+    </nav>
     <div class="container mx-auto pt-4">
       <div class="flex mx-2 md:mx-0 justify-between">
         <a href="/dashboard/create" class="btn btn-sm btn-outline">Create</a>
       </div>
     </div>
-    <div class="container mx-auto py-4">
+    <main class="container mx-auto py-4">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="rounded-lg shadow-md mx-2 md:mx-0">
           <div class="overflow-x-auto">
@@ -180,7 +171,7 @@
           </table>
         </div>
       </div>
-    </div>
+    </main>
     <dialog id="logout" class="modal">
       <form method="dialog" class="modal-box">
         <h3 class="font-bold text-lg">Confirm Logout</h3>
@@ -191,10 +182,19 @@
         </div>
       </form>
     </dialog>
-    <script
-      src="/js/dashboard.js"
-      sct="sct-NW4MaLzLxYkiXfZ0wEi3Y0U6DKbzpM4bMpABp68RtabV4ArN0JxIFb00OBkK"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/gh/manucaralmo/GlowCookies@3.1.8/src/glowCookies.min.js"></script>
+    <script>
+      glowCookies.start("en", {
+        style: 1,
+        analytics: "G-24044F2GSK",
+        policyLink: "https://east.baby/privacy",
+        hideAfterClick: true,
+        border: "none",
+        bannerBackground: "#2a323c",
+        bannerColor: "#ffffff",
+        acceptBtnBackground: "#7400b8",
+      });
+    </script>
     <script src="/js/service.js"></script>
   </body>
 </html>

@@ -1,62 +1,49 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const scriptElement = document.querySelector('script[src="/js/delete.js"]');
-  const apiKey = scriptElement.getAttribute("sct");
-  const urlParts = window.location.pathname.split("/");
-  const id = urlParts[urlParts.length - 1];
-  const form = document.getElementById("form");
-  const urlInput = document.getElementById("url");
-  const custumInput = document.getElementById("custum");
-  const alertSuccess = document.getElementById("alert-success");
-  const alertEror = document.getElementById("alert-error");
-  const messageSuccess = document.getElementById("message");
-  const messageError = document.getElementById("error");
-
-  alertSuccess.hidden = true;
-  alertEror.hidden = true;
-
+  let e = document.querySelector('script[src="/js/delete.js"]'),
+    t = e.getAttribute("sct"),
+    n = window.location.pathname.split("/"),
+    r = n[n.length - 1],
+    a = document.getElementById("form"),
+    o = document.getElementById("alert-success"),
+    d = document.getElementById("alert-error"),
+    s = document.getElementById("message"),
+    i = document.getElementById("error");
+  (o.hidden = !0), (d.hidden = !0);
   try {
-    const response = await fetch(`/api/v1/shorten/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-        "API-Key": apiKey,
-      },
+    let h = await fetch(`/api/v1/shorten/${r}`, {
+      headers: { "Content-Type": "application/json", "API-Key": t },
     });
-
-    if (!response.ok) {
-      messageError.textContent = "Short URL not found";
-      alertEror.hidden = false;
+    h.ok ||
+      ((i.textContent = "Short URL not found"),
+      (d.hidden = !1),
       setTimeout(() => {
         window.location.href = "/dashboard";
-      }, 3000);
-    }
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    setTimeout(() => {
-      window.location.href = "/dashboard";
-    }, 3000);
+      }, 2500));
+  } catch (l) {
+    console.error("Error fetching data:", l),
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 2500);
   }
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const response = await fetch(`/api/v1/shorten/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "API-Key": apiKey,
-      },
-    });
-
-    const result = await response.json();
-    if (response.ok) {
-      messageSuccess.textContent = result.message;
-      alertSuccess.hidden = false;
-      setTimeout(() => {
-        window.location.href = "/dashboard";
-      }, 3000);
-    } else {
-      messageError.textContent = result.error;
-      alertEror.hidden = false;
+  a.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    let n = await fetch(`/api/v1/shorten/${r}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json", "API-Key": t },
+      }),
+      a = await n.json();
+    if (n.ok)
+      (s.textContent = a.message),
+        (o.hidden = !1),
+        setTimeout(() => {
+          window.location.href = "/dashboard";
+        }, 2500);
+    else {
+      (i.textContent = a.error),
+        (d.hidden = !1),
+        setTimeout(() => {
+          d.hidden = !0;
+        }, 2500);
       return;
     }
   });

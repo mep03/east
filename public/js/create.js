@@ -1,43 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const signinForm = document.getElementById("form");
-  const scriptElement = document.querySelector('script[src="/js/create.js"]');
-  const apiKey = scriptElement.getAttribute("sct");
-  const alertSuccess = document.getElementById("alert-success");
-  const alertEror = document.getElementById("alert-error");
-  const messageSuccess = document.getElementById("message");
-  const messageError = document.getElementById("error");
-
-  alertSuccess.hidden = true;
-  alertEror.hidden = true;
-
-  signinForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const originalUrl = document.getElementById("url").value;
-    const customShortUrl = document.getElementById("custum").value;
-
-    const response = await fetch("/api/v1/shorten", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "API-Key": apiKey,
-      },
-      body: JSON.stringify({ originalUrl, customShortUrl }),
+  let e = document.getElementById("form"),
+    t = document.querySelector('script[src="/js/create.js"]'),
+    n = t.getAttribute("sct"),
+    r = document.getElementById("alert-success"),
+    d = document.getElementById("alert-error"),
+    a = document.getElementById("message"),
+    s = document.getElementById("error");
+  (r.hidden = !0),
+    (d.hidden = !0),
+    e.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      let t = document.getElementById("url").value,
+        o = document.getElementById("custum").value,
+        l = await fetch("/api/v1/shorten", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "API-Key": n },
+          body: JSON.stringify({ originalUrl: t, customShortUrl: o }),
+        }),
+        i = await l.json();
+      l.ok
+        ? ((a.textContent = i.message),
+          (r.hidden = !1),
+          setTimeout(() => {
+            window.location.href = "/dashboard";
+          }, 2500))
+        : ((s.textContent = i.error),
+          (d.hidden = !1),
+          setTimeout(() => {
+            window.location.href = "/dashboard";
+          }, 2500));
     });
-
-    const result = await response.json();
-    if (response.ok) {
-      messageSuccess.textContent = result.message;
-      alertSuccess.hidden = false;
-      setTimeout(() => {
-        window.location.href = "/dashboard";
-      }, 3000);
-    } else {
-      messageError.textContent = result.error;
-      alertEror.hidden = false;
-      setTimeout(() => {
-        window.location.href = "/dashboard";
-      }, 3000);
-    }
-  });
 });
