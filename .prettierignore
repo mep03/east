@@ -1,3 +1,5 @@
 node_modules
 dist
 public/styles.css
+public/cookies.css
+public/js/cookies.js
