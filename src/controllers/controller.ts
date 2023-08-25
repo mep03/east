@@ -14,6 +14,7 @@ import { generateToken } from "../utils/token";
 import { sendEmail } from "../libs/mail";
 import { shouldSkipRedirect } from "../utils/skipredirect";
 import { isStrongPassword } from "../utils/password";
+import { isValidCustomUrl } from "../utils/custom";
 
 /**
  * @desc Serves the index page.
@@ -80,6 +81,10 @@ export const createShortUrl = async (req: Request, res: Response) => {
 
   if (!validUrl.isWebUri(originalUrl)) {
     return res.status(400).json({ error: "Invalid URL" });
+  }
+
+  if (customShortUrl && !isValidCustomUrl(customShortUrl)) {
+    return res.status(400).json({ error: "Invalid custom short URL" });
   }
 
   try {
@@ -338,12 +343,17 @@ export const updateShortUrl = async (req: Request, res: Response) => {
       existingUrl.originalUrl = originalUrl;
     }
 
-    if (shortUrl && shortUrl !== existingUrl.shortUrl) {
-      const isShortUrlTaken = await UrlModel.exists({ shortUrl: shortUrl });
-      if (isShortUrlTaken) {
-        return res.status(400).json({ error: "Short URL is already taken" });
+    if (shortUrl) {
+      if (!isValidCustomUrl(shortUrl)) {
+        return res.status(400).json({ error: "Invalid custom short URL" });
       }
-      existingUrl.shortUrl = shortUrl;
+      if (shortUrl !== existingUrl.shortUrl) {
+        const isShortUrlTaken = await UrlModel.exists({ shortUrl: shortUrl });
+        if (isShortUrlTaken) {
+          return res.status(400).json({ error: "Short URL is already taken" });
+        }
+        existingUrl.shortUrl = shortUrl;
+      }
     }
 
     await existingUrl.save();
