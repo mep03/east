@@ -480,16 +480,35 @@ export const verificationToken = async (req: Request, res: Response) => {
 };
 
 /**
- * @desc Logs the user out and redirects to the homepage.
+ * @desc Logs the user out and redirects to the homepage or sign-in page.
  * @info This function handles the user logout process. It clears the "sessionToken" cookie to invalidate the user's session,
- *       and then redirects the user to the homepage.
+ *       generates a new session token, updates the user's session token in the database, and then redirects the user.
  * @param req The Express Request object.
  * @param res The Express Response object.
  */
-export const signOut = (req: Request, res: Response) => {
+export const signOut = async (req: Request, res: Response) => {
+  const userSessionToken = req.cookies.sessionToken;
+
+  if (!userSessionToken) {
+    return res.status(401).json({ error: "User not authenticated" });
+  }
+
+  const user = await UserModel.findOne({
+    sessionToken: userSessionToken,
+  });
+
+  if (!user) {
+    return res.status(401).json({ error: "Invalid sessionToken" });
+  }
+
+  const NewsessionToken = generateToken();
+
+  user.sessionToken = NewsessionToken;
+  await user.save();
+
   res.clearCookie("sessionToken", { httpOnly: true, secure: true });
 
-  return res.status(200).redirect("/");
+  return res.status(200).redirect("/signin");
 };
 
 /**
