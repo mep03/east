@@ -8,7 +8,7 @@
 
 ```
 Root Directory = .
-Build Command = yarn --ignore-engines && yarn build
+Build Command = yarn && yarn build
 Start Command = node dist/app.js
 ```
 
